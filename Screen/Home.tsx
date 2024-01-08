@@ -1,24 +1,18 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, FlatList, Button, PanResponder, Animated, TouchableOpacity, Alert, Switch, ScrollView, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { OptionData, OptionInput } from '../components/Option';
+import { View, Text, TextInput, StyleSheet, FlatList, Button, TouchableOpacity, Alert, Switch, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AddOptionButton from '../components/AddOptionButton';
 
 function HomeScreen({ navigation }: { navigation: any }) {
 
-    const [question, onChangeQuestion] = useState('');
-    const [wordCount, onWordCount] = useState(255)
+    const [question, onChangeQuestion] = useState<string>('');
+    const [wordCount, onWordCount] = useState<number>(255)
     const [data, setData] = useState<Array<string>>([]);
     const [newOption, setNewOption] = useState<string>('');
     const [isMultipleAnswer, setIsMultipleAnswer] = useState<boolean>(false)
     const toggleSwitch = () => setIsMultipleAnswer(previousState => !previousState);
-
-    const AddOptionButton = ({ onPress, title }: { onPress: () => void, title: string }) => (
-        <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-            <Text style={styles.appButtonText}>{title}</Text>
-        </TouchableOpacity>
-    );
 
     const addOptionOnPress = () => {
         if (data.includes(newOption)) {
@@ -35,12 +29,11 @@ function HomeScreen({ navigation }: { navigation: any }) {
         setNewOption('')
     }
 
-
-    function keyExtractor(str: string, index: number) {
+    function keyExtractor(str: string) {
         return str
     }
-    function renderItem(info: DragListRenderItemInfo<string>, data: Array<string>) {
-        const { item, index, onDragStart, onDragEnd, isActive } = info;
+    function renderItem(info: DragListRenderItemInfo<string>) {
+        const { item, onDragStart, onDragEnd } = info;
 
         return (
             <View style={styles.option}>
@@ -59,10 +52,9 @@ function HomeScreen({ navigation }: { navigation: any }) {
         );
     }
     async function onReordered(fromIndex: number, toIndex: number) {
-        const copy = [...data]; // Don't modify react data in-place
+        const copy = [...data];
         const removed = copy.splice(fromIndex, 1);
-
-        copy.splice(toIndex, 0, removed[0]); // Now insert at the new pos
+        copy.splice(toIndex, 0, removed[0]);
         setData(copy);
     }
 
@@ -247,13 +239,6 @@ const styles = StyleSheet.create({
         paddingTop: 17,
         paddingBottom: 17,
     },
-    appButtonContainer: {
-        paddingTop: 17,
-        paddingBottom: 17,
-    },
-    appButtonText: {
-        fontSize: 17,
-    }
 });
 
 export default HomeScreen
