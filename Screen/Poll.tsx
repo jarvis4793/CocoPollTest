@@ -11,7 +11,7 @@ export default function PollScreen({ route, navigation }: { route: any, navigati
                 options.map((option, index) => (
                     <View style={styles.option}>
                         <View style={styles.optionItem}>
-                            <Text key={index} style={styles.optionText}>{option}</Text>
+                            <Text key={option} style={styles.optionText}>{option}</Text>
                         </View>
                         <View style={styles.optionVotes}>
                             <Text key={index} style={styles.optionText}>0 votes</Text>
