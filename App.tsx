@@ -15,7 +15,7 @@ export default function App() {
         <Stack.Screen
           name="New poll"
           component={HomeScreen}
-          options={({ navigation, route }) => ({
+          options={() => ({
             headerRight: () => (
               <Button title="send" />
             ),
@@ -28,7 +28,7 @@ export default function App() {
         <Stack.Screen
           name="Poll"
           component={PollScreen}
-          options={({ navigation, route }) => ({
+          options={({ navigation }) => ({
             headerLeft: () => (
               <Button
                 title="close"
